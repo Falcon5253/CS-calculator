@@ -24,5 +24,19 @@ namespace CS_calculator
         {
             InitializeComponent();
         }
+        private void ManualButton_Click(object sender, RoutedEventArgs e)
+        {
+            TaskWindow a = new TaskWindow();
+            a.Show();
+        }
+        private async void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+            string expression = text.Text;
+            calculate(expression);
+        }
+        public void calculate(string expression)
+        {
+            Console.WriteLine("Пока робит");
+        }
     }
 }
