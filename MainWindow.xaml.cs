@@ -32,11 +32,188 @@ namespace CS_calculator
         private async void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
             string expression = text.Text;
-            calculate(expression);
+            string strRPN = "";
+            string[] RPN = ConvertToRPN(expression);
+            foreach (string i in RPN){
+                strRPN += i + " ";
+            }
+            int result = CalculateRPN(RPN);
+            Console.WriteLine(result);
         }
-        public void calculate(string expression)
+
+        public int CalculateRPN(string[] arr){
+            for (int i=0; i<arr.Length; i++){
+                if (arr[i] == "+"){
+                    int? a = null;
+                    int? b = null;
+                    for(int j = i-1; j >= 0; j--){
+                        if (arr[j] != "$"){
+                            if (a is null){
+                                a = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                            }
+                            else {
+                                b = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                                break;
+                            }
+                        }
+                    }
+                    arr[i] = Convert.ToString(a+b);
+                }
+                else if (arr[i] == "*"){
+                    int? a = null;
+                    int? b = null;
+                    for(int j = i-1; j >= 0; j--){
+                        if (arr[j] != "$"){
+                            if (a is null){
+                                a = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                            }
+                            else {
+                                b = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                                break;
+                            }
+                        }
+                    }
+                    arr[i] = Convert.ToString(a*b);
+                }
+                else if (arr[i] == "/"){
+                    int? a = null;
+                    int? b = null;
+                    for(int j = i-1; j >= 0; j--){
+                        if (arr[j] != "$"){
+                            if (a is null){
+                                a = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                            }
+                            else {
+                                b = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                                break;
+                            }
+                        }
+                    }
+                    arr[i] = Convert.ToString(b/a);
+                }
+                else if (arr[i] == "-"){
+                    int? a = null;
+                    int? b = null;
+                    for(int j = i-1; j >= 0; j--){
+                        if (arr[j] != "$"){
+                            if (a is null){
+                                a = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                            }
+                            else {
+                                b = Convert.ToInt32(arr[j]);
+                                arr[j]="$";
+                                break;
+                            }
+                        }
+                    }
+                    arr[i] = Convert.ToString(b-a);
+                }
+            }
+            foreach (string i in arr){
+                if (i != "$"){
+                    return Convert.ToInt32(i);
+                }
+            }
+            return 0;
+        }
+
+
+        // Перевод в обратную польскую запись ---------- НАЧАЛО ФУНКЦИИ
+        public string[] ConvertToRPN(string expression)
         {
-            Console.WriteLine("Пока робит");
+            string stack = "";
+            string[] RPN = new string[expression.Length];
+            int priority(char a){
+                if (a == '*' || a == '/'){
+                    return 3;
+                }
+                else if (a == '+' || a == '-'){
+                    return 2;
+                }
+                else if (a == '('){
+                    return 1;
+                }
+                else if (a == ')'){
+                    return 4;
+                }
+                else {
+                    return 0;
+                }
+            }
+            int k = 0;
+            for(int i=0; i<expression.Length; i++){
+                try {
+                    if (priority(expression[i]) == 4){
+                        while (stack[stack.Length-1] != '(') {
+                            RPN[k] = Convert.ToString(stack[stack.Length-1]);
+                            k++;
+                            stack = stack.Substring(0, stack.Length-1);
+                        }
+                        stack = stack.Substring(0, stack.Length-1);
+                    }
+                    else if (priority(expression[i]) == 3){
+                        if (priority(stack[stack.Length-1]) < 3){
+                            stack += expression[i];
+                        }
+                        else{
+                            while (priority(stack[stack.Length-1]) == 3){
+                                RPN[k] = Convert.ToString(stack[stack.Length-1]);
+                                k++;
+                                stack = stack.Substring(0, stack.Length-1);
+                            }
+                            stack += expression[i];
+                        }
+                    }
+                    else if (priority(expression[i]) == 2){
+                        if (priority(stack[stack.Length-1]) < 2){
+                            stack += expression[i];
+                        }
+                        else{
+                            while (priority(stack[stack.Length-1]) >= 2){
+                                RPN[k] = Convert.ToString(stack[stack.Length-1]);
+                                k++;
+                                stack = stack.Substring(0, stack.Length-1);
+
+                            }
+                            stack += expression[i];
+                        }
+                    }
+                    else if (priority(expression[i]) == 1){
+                        stack += expression[i];
+                    }
+                    else {
+                        try{
+                            while (priority(expression[i]) == 0){
+                                RPN[k] += Convert.ToString(expression[i]);
+                                i++;
+                            }
+                            i--;
+                            k++;
+                        }
+                        catch(IndexOutOfRangeException){
+                            i--;
+                            k++;
+                        }
+                    }
+                }
+                catch(IndexOutOfRangeException){
+                    stack += expression[i];
+                }
+            }
+            while (stack != ""){
+                RPN[k] = Convert.ToString(stack[stack.Length-1]);
+                k++;
+                stack = stack.Substring(0, stack.Length-1);
+            }
+            return RPN;
         }
+        // Перевод в обратную польскую запись ---------- КОНЕЦ ФУНКЦИИ
     }
 }
