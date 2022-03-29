@@ -29,7 +29,7 @@ namespace CS_calculator
             TaskWindow a = new TaskWindow();
             a.Show();
         }
-        private async void CalculateButton_Click(object sender, RoutedEventArgs e)
+        private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
             string expression = text.Text;
             string strRPN = "";
@@ -59,7 +59,12 @@ namespace CS_calculator
                             }
                         }
                     }
-                    arr[i] = Convert.ToString(a+b);
+                    if (a is not null && b is not null){
+                        arr[i] = Convert.ToString(a.Value+b.Value);
+                    }
+                    else {
+                        arr[i] = "0";
+                    }
                 }
                 else if (arr[i] == "*"){
                     int? a = null;
@@ -77,7 +82,12 @@ namespace CS_calculator
                             }
                         }
                     }
-                    arr[i] = Convert.ToString(a*b);
+                    if (a is not null && b is not null){
+                        arr[i] = Convert.ToString(a.Value*b.Value);
+                    }
+                    else {
+                        arr[i] = "0";
+                    }
                 }
                 else if (arr[i] == "/"){
                     int? a = null;
@@ -95,7 +105,12 @@ namespace CS_calculator
                             }
                         }
                     }
-                    arr[i] = Convert.ToString(b/a);
+                    if (a is not null && b is not null){
+                        arr[i] = Convert.ToString(b.Value/a.Value);
+                    }
+                    else {
+                        arr[i] = "0";
+                    }
                 }
                 else if (arr[i] == "-"){
                     int? a = null;
@@ -113,7 +128,9 @@ namespace CS_calculator
                             }
                         }
                     }
-                    arr[i] = Convert.ToString(b-a);
+                    if (a is not null && b is not null){
+                        arr[i] = Convert.ToString(b.Value-a.Value);
+                    }
                 }
             }
             foreach (string i in arr){
