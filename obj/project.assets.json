@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Falcon\\Desktop\\Мои проекты\\CS-calculator\\CS-calculator.csproj",
+      "projectUniqueName": "D:\\Мои проекты\\CS-calculator\\CS-calculator.csproj",
       "projectName": "CS-calculator",
-      "projectPath": "C:\\Users\\Falcon\\Desktop\\Мои проекты\\CS-calculator\\CS-calculator.csproj",
+      "projectPath": "D:\\Мои проекты\\CS-calculator\\CS-calculator.csproj",
       "packagesPath": "C:\\Users\\Falcon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Falcon\\Desktop\\Мои проекты\\CS-calculator\\obj\\",
+      "outputPath": "D:\\Мои проекты\\CS-calculator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Falcon\\AppData\\Roaming\\NuGet\\NuGet.Config"

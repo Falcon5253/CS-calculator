@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace CS_calculator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -37,6 +34,7 @@ namespace CS_calculator
             foreach (string i in RPN){
                 strRPN += i + " ";
             }
+            Console.WriteLine(strRPN);
             int result = CalculateRPN(RPN);
             Console.WriteLine(result);
         }
@@ -60,10 +58,10 @@ namespace CS_calculator
                         }
                     }
                     if (a is not null && b is not null){
-                        arr[i] = Convert.ToString(a.Value+b.Value);
+                        arr[i] = arr[i] = Convert.ToString(b+a);
                     }
                     else {
-                        arr[i] = "0";
+                        arr[i] = Convert.ToString(0+ a);
                     }
                 }
                 else if (arr[i] == "*"){
@@ -86,7 +84,7 @@ namespace CS_calculator
                         arr[i] = Convert.ToString(a.Value*b.Value);
                     }
                     else {
-                        arr[i] = "0";
+                        arr[i] = Convert.ToString(0*a);
                     }
                 }
                 else if (arr[i] == "/"){
@@ -105,11 +103,11 @@ namespace CS_calculator
                             }
                         }
                     }
-                    if (a is not null && b is not null){
+                    if (a is not null && b is not null){    
                         arr[i] = Convert.ToString(b.Value/a.Value);
                     }
                     else {
-                        arr[i] = "0";
+                        arr[i] = Convert.ToString(0/a);
                     }
                 }
                 else if (arr[i] == "-"){
@@ -130,9 +128,14 @@ namespace CS_calculator
                     }
                     if (a is not null && b is not null){
                         arr[i] = Convert.ToString(b.Value-a.Value);
+                        
+                    }
+                    else {
+                        arr[i] = Convert.ToString(0-a);
                     }
                 }
             }
+            
             foreach (string i in arr){
                 if (i != "$"){
                     return Convert.ToInt32(i);
